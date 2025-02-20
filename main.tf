@@ -355,59 +355,6 @@ output "public_dns" {
 }
 
 
-# module "autoscaling_aws" {
-#   source  = "terraform-aws-modules/autoscaling/aws"
-#   version = "8.1.0"
-
-#   # Autoscaling group
-#   name = "myasg"
-
-#   vpc_zone_identifier = [aws_subnet.private_subnets["private_subnet_1"].id, 
-#   aws_subnet.private_subnets["private_subnet_2"].id, 
-#   aws_subnet.private_subnets["private_subnet_3"].id]
-#   min_size            = 0
-#   max_size            = 1
-#   desired_capacity    = 1
-
-#   # Launch template
-#   # use_lt    = true
-#   create_launch_template = true
-
-#   image_id      = data.aws_ami.ubuntu.id
-#   instance_type = "t3.micro"
-
-#   # tags_as_map = {
-#   #   Name = "Web EC2 Server 2"
-#   # }
-
-# }
-
-
-# module "autoscaling_git" {
-#   source = "terraform-aws-modules/autoscaling/aws"
-
-#   # Autoscaling group
-#   name = "myasg"
-
-#   vpc_zone_identifier = [aws_subnet.private_subnets["private_subnet_1"].id,
-#   aws_subnet.private_subnets["private_subnet_2"].id, 
-#   aws_subnet.private_subnets["private_subnet_3"].id]
-#   min_size            = 0
-#   max_size            = 1
-#   desired_capacity    = 1
-
-#   # Launch template
-#   use_lt    = true
-#   create_lt = true
-
-#   image_id      = data.aws_ami.ubuntu.id
-#   instance_type = "t3.micro"
-
-#   tags_as_map = {
-#     Name = "Web EC2 Server 2"
-#   }
-
-# }
 
 module "s3-bucket" {
   source  = "terraform-aws-modules/s3-bucket/aws"
@@ -435,5 +382,14 @@ module "vpc" {
     Name = "VPC from Module"
     Terraform = "true"
     Environment = "dev"
+  }
+}
+# Terraform Resource Block - To Build EC2 instance in Public Subnet
+resource "aws_instance" "web_server_2" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = "t3.micro"
+  subnet_id     = aws_subnet.public_subnets["public_subnet_2"].id
+  tags = {
+    Name = "Web EC2 Server"
   }
 }
