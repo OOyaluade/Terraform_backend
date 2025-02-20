@@ -393,3 +393,5 @@ resource "aws_instance" "web_server_2" {
     Name = "Web EC2 Server"
   }
 }
+
+
