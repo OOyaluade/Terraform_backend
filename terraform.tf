@@ -1,11 +1,11 @@
 terraform {
-  backend "remote" {
-    organization = "Damiintech"
+  # backend "remote" {
+  #   organization = "Damiintech"
 
-    workspaces {
-      name = "Terraform_backend"
-    }
-  }
+  #   workspaces {
+  #     name = "Terraform_backend"
+  #   }
+  # }
   required_version = ">= 1.0.0"
   required_providers {
     aws = {
